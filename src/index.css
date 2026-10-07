@@ -1,0 +1,154 @@
+@import 'tailwindcss';
+
+/* Dark mode is driven by a `dark` class on <html>, set from the user's
+   appearance setting (light / dark / system). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-display: ui-rounded, 'SF Pro Rounded', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  /* Brand */
+  --color-teal-brand: #0f756e;
+  --color-teal-brand-strong: #0b5c56;
+  --color-teal-brand-soft: #14b8a6;
+  --color-coral: #e2553f;
+  --color-coral-strong: #c9432e;
+  --color-coral-soft: #fa7361;
+
+  /* Surfaces — values swap in dark mode via the variables below */
+  --color-canvas: var(--tf-canvas);
+  --color-card: var(--tf-card);
+  --color-card-raised: var(--tf-card-raised);
+  --color-ink: var(--tf-ink);
+  --color-muted: var(--tf-muted);
+  --color-line: var(--tf-line);
+}
+
+:root {
+  --tf-canvas: #f2f4f3;
+  --tf-card: #ffffff;
+  --tf-card-raised: #f7f9f8;
+  --tf-ink: #12201f;
+  --tf-muted: #5b6b69;
+  --tf-line: #dde3e2;
+  --tf-pattern: rgb(15 117 110 / 0.09);
+  --tf-pattern-preview: rgb(15 117 110 / 0.45);
+  color-scheme: light;
+}
+
+.dark {
+  --tf-canvas: #0b1110;
+  --tf-card: #151d1c;
+  --tf-card-raised: #1c2625;
+  --tf-ink: #eef3f2;
+  --tf-muted: #9aabaa;
+  --tf-line: #2a3634;
+  --tf-pattern: rgb(255 255 255 / 0.07);
+  --tf-pattern-preview: rgb(255 255 255 / 0.4);
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--tf-canvas);
+  color: var(--tf-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Visible keyboard focus everywhere */
+:focus-visible {
+  outline: 3px solid var(--color-teal-brand-soft);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@utility card {
+  @apply rounded-2xl border border-line bg-card;
+}
+
+@utility btn {
+  @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors select-none disabled:cursor-not-allowed disabled:opacity-50;
+}
+
+/* Coral is reserved for primary calls to action, app-wide. */
+@utility btn-primary {
+  @apply btn bg-coral text-white hover:bg-coral-strong active:bg-coral-strong;
+}
+
+@utility btn-teal {
+  @apply btn bg-teal-brand text-white hover:bg-teal-brand-strong;
+}
+
+@utility btn-secondary {
+  @apply btn border border-line bg-card text-ink hover:bg-card-raised;
+}
+
+@utility btn-ghost {
+  @apply btn text-muted hover:bg-card-raised hover:text-ink;
+}
+
+@utility btn-danger {
+  @apply btn border border-red-300 bg-card text-red-700 hover:bg-red-50 dark:border-red-900 dark:text-red-400 dark:hover:bg-red-950/40;
+}
+
+@utility input {
+  @apply w-full rounded-xl border border-line bg-card px-3 py-2.5 text-ink placeholder:text-muted focus:border-teal-brand focus:outline-none;
+}
+
+@utility label {
+  @apply mb-1.5 block text-sm font-semibold text-ink;
+}
+
+@utility chip {
+  @apply inline-flex min-h-9 items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-sm font-medium whitespace-nowrap transition-colors;
+}
+
+@utility section-title {
+  @apply text-lg font-bold tracking-tight text-ink;
+}
+
+/* Range inputs tinted with the brand colour */
+input[type='range'] {
+  accent-color: var(--color-teal-brand);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@utility animate-slide-down {
+  animation: slide-down 220ms ease-out;
+}
+
+/* Horizontally scrollable chip rows without a visible scrollbar */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
